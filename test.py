@@ -31,23 +31,8 @@ MIDIRequest.PrintNoteDict()
 
 
 
-
-
-
-
-
-
-
 #device_name = GetOutputDeviceNameByID(0)
 #port = CreatePortByDeviceName(device_name)
-
-
-
-
-
-
-
-
 
 
 '''

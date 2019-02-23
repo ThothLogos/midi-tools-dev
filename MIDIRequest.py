@@ -1,5 +1,5 @@
 # MIDIRequest module
-import MIDINoteDict
+import notedict
 import pprint
 
 def ScaleMajorAscending(fundamental, cycles=1, octaves=1, skip_pos=[]):
