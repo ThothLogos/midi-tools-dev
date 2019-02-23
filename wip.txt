@@ -1,0 +1,112 @@
+MIDI_py
+
+
+TODO:
+
+	Should Device() be a class? Or just use dicts?
+		probably, they are similar and persistent
+	Should Request() be a class or a module?
+		objects might be easier for checking against current_key etc
+		requests are transient though, fired and fulfilled
+			is a module of static methods enough?
+
+Structure:
+
+	CLASS - MIDIState.py:
+		- object that is created when session begins - only one state exists
+		- has dynamic attributes to control the state which can be updated
+		- methods revolve around manipulating the state and issuing requests
+
+		Attributes:
+
+			known_devices
+				- mutable, tracks available MIDI devices
+				- dict of id => name or name => id
+				- is the id based on the channel? do we need to track both?
+			registered_devices
+				- mutable, tracks intended playable devices, subset of known_devices
+				- dictionary of port_name => id (ports have ids?)
+					should it be port_name => (tuple) of id, channel, dev_name?
+			current_key
+				- mutable, enforces specific key for arp/seq/scale requests
+				- should it be an array of valid Notes, or a key identifier
+					notes could be directly checked for validity, prob easier
+					something like “Cmaj” needs to be evaluated more often/more places
+			current_bpm
+				- mutable, enforces bpm for requests
+			start_time
+				- constant, tracks State begin time (uptime tracking)
+			song_playing
+				- mutable, bool tracking if a song is currently being played
+			current_song
+				- mutable, holds .mid reference name or ID
+				- could be used to provide information to the stream
+				- would serve as primary key for a reference dictionary somewhere
+					that contains song info like title, composer, date, etc
+			
+		Methods:
+			
+			DiscoverKnownDevices()
+				- leverage mido.get_output_names()
+				- populates the dictionary known_devices
+
+			PrintKnownDevices(only_log=false)
+				- display contents of known_devices to STDOUT and logs
+				- only_log optional suppression of STDOUT
+
+			RegisterDeviceByName(known_device_name)
+				- populate new dict member into registered_devices
+				- takes the proper name of a device, ie “MIDI OP-1 USB”
+				- names as listed by `aconnect -l` terminal command
+				- creates port by calling CreateDevicePort(registered_device)
+			
+			RegisterDeviceByID(known_device_id)
+				- populate new dict member into registered_devices
+				- takes an integer ID number as found in `aconnect -l`
+				- creates port by calling CreateDevicePort(registered_device)
+
+			CreateDevicePort(name_or_id):
+				- updates the member of registered_devices to include the port
+
+			UnregisterDevice(name=None, id=None)
+				- can take name or id, parse args to determine behavior
+				- should this be two unique methods for Name/ID?
+				- ensures DestroyDevicePort(registered_device) happens
+
+			SetCurrentKey(notes=[])
+				- takes an array of notes, sanity check?
+				- updates current_key attribute
+				
+			ValidateRequestAgainstKey(request)
+				- receives a request object and evaluates against current key
+				- compares all constituent notes to verify in-key
+				
+			
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
