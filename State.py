@@ -44,3 +44,17 @@ class State:
         print "Discovered following raw devices:"
         for i in range(len(devices)):
             print "{} - {}".format(i, devices[i])
+
+    def RegisterDeviceByName(self, name):
+        if self.debug: print("Attempting to register name: {}".format(name))
+        try:
+            new_device = mido.open_output(name)
+            self.registeredDevices.append(new_device)
+        except:
+            print("FAILED")
+        if self.debug:
+            for i in range(len(self.registeredDevices)):
+                print("{}".format(i))
+            print("Closing device: {}".format(name))
+            new_device.close()
+
