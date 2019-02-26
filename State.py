@@ -50,11 +50,30 @@ class State:
         try:
             new_device = mido.open_output(name)
             self.registeredDevices.append(new_device)
-        except:
-            print("FAILED")
-        if self.debug:
+        except Exception as e:
+            print("ERROR: {}".format(e))
+
+    def UnregisterDevice(self, name):
+        if self.debug: print("Attempting to unregister name: {}".format(name))
+        try:
             for i in range(len(self.registeredDevices)):
-                print("{}".format(i))
-            print("Closing device: {}".format(name))
-            new_device.close()
+                if self.registeredDevices[i].name == name:
+                    print("Found device {} - closing & unreg".format(name))
+                    self.registeredDevices[i].close()
+                    del(self.registeredDevices[i])
+                else:
+                    print("Unable to locate device: {}".format(name))
+        except Exception as e:
+            print("Failed to UnregisterDevice")
+            print("ERROR: {}".format(e))
+
+    def PrintRegisteredDevices(self):
+        print "Currently Registered devices:"
+        for i in range(len(self.registeredDevices)):
+            print "{} - {}".format(i, self.registeredDevices[i])
+        if not self.registeredDevices: print("RegDevices is empty!")
+
+    def PrintMidoPorts(self):
+        print(mido.get_output_names())
+
 
