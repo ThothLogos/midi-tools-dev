@@ -12,3 +12,12 @@ class Device:
 
     def SetRegistered(self):
         self.registered = True
+
+    def Unregister(self):
+        self.registered = False
+
+    def SetChannel(self, channel):
+        if int(channel): 
+            self.channel = channel
+        else: 
+            print("Unable to modify device channel, not a number")

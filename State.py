@@ -29,7 +29,7 @@ class State:
             self.RemoveExcludedDevices(self.discoveredDevices)
             self.PrintDiscoveredDevices(self.discoveredDevices)
         else:
-            raise Exception("mido.get_output_names() returned no results")
+            print("mido.get_output_names() returned no results")
 
     def SanitizeDiscoveredDevices(self, devices):
         if self.debug: print "Cleaning up raw device list..."
