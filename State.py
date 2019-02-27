@@ -19,7 +19,7 @@ class State:
         self.currentSong = None
 
     def ReportCreationTime(self):
-        print "State was created at: {}".format(self.createdAt)
+        print("State was created at: {}".format(self.createdAt))
 
     def DiscoverKnownDevices(self):
         self.discoveredDevices = mido.get_output_names()
@@ -32,18 +32,18 @@ class State:
             print("mido.get_output_names() returned no results")
 
     def SanitizeDiscoveredDevices(self, devices):
-        if self.debug: print "Cleaning up raw device list..."
+        if self.debug: print("Cleaning up raw device list...")
         for i in range(len(devices)):
             devices[i] = devices[i].split(":")[1]
 
     def RemoveExcludedDevices(self, devices):
-        if self.debug: print "Cleaning up list of exlucded devices..."
+        if self.debug: print("Cleaning up list of exlucded devices...")
         devices = set(devices) - set(EXCLUDED_DEVICES)
 
     def PrintDiscoveredDevices(self, devices):
-        print "Discovered following raw devices:"
+        print("Discovered following raw devices:")
         for i in range(len(devices)):
-            print "{} - {}".format(i, devices[i])
+            print("{} - {}".format(i, devices[i]))
 
     def RegisterDeviceByName(self, name):
         if self.debug: print("Attempting to register name: {}".format(name))
@@ -68,12 +68,11 @@ class State:
             print("ERROR: {}".format(e))
 
     def PrintRegisteredDevices(self):
-        print "Currently Registered devices:"
+        print("Currently Registered devices:")
         for i in range(len(self.registeredDevices)):
-            print "{} - {}".format(i, self.registeredDevices[i])
+            print("{} - {}".format(i, self.registeredDevices[i]))
         if not self.registeredDevices: print("RegDevices is empty!")
 
     def PrintMidoPorts(self):
         print(mido.get_output_names())
-
-
+    
