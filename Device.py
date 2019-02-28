@@ -20,7 +20,8 @@ class Device(object):
 
     def SetChannel(self, channel):
         channel_int = Helpers.EnsureInteger(channel)
-        if Helpers.IsValidChannel(int(channel)):
-            self.channel = channel
+        if Helpers.IsValidChannel(channel_int):
+            self.channel = channel_int
         else: 
-            print("Unable to modify device channel, not a number 0-15")
+            #raise Exception("SetChannel requires value 0-15, passed {}".format(channel))
+            print("SetChannel requires value 0-15, passed {}".format(channel_int))
